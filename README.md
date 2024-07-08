@@ -2,6 +2,8 @@
 
 ## Analysis of Public Perception of Women's Participation in Football during Euro 2024
 
+![EURO-2024](https://github.com/Munchkinland/Euro2024-Sentimel-Analysis/assets/92251234/ae209ede-8a66-4990-950b-7d105c31cd08)
+
 ### Introduction
 
 The importance of equal opportunities for women in sports cannot be overstated. Historically, sports have been a male-dominated arena, with women often facing significant barriers to participation, recognition, and equal treatment. However, the landscape is gradually changing, and events like the Euro 2024 are prime examples of platforms where women athletes are increasingly showcasing their talent and dedication.
