@@ -171,10 +171,12 @@ fig_box = px.box(df, x='sentiment_label', y='sentiment_score', color='sentiment_
                  labels={'sentiment_label': 'Sentiment', 'sentiment_score': 'Score'},
                  color_discrete_sequence=px.colors.qualitative.Vivid)
 fig_box.show()
-9. Conclusions
+# 9. Conclusions
 Through this analysis, we can draw several key conclusions about the public perception of women's participation in football during Euro 2024:
 
 Distribution of Sentiments: Most of the analyzed texts exhibit a neutral sentiment, followed by positive and then negative sentiments.
 Proportion of Sentiments: The pie chart clearly shows the proportion of each sentiment type, indicating that the perception is mostly neutral or positive.
 Sentiment Scores: The box plot shows the distribution of sentiment scores, indicating variability within each sentiment category.
 This analysis provides a clear view of how the participation of women in football during Euro 2024 is perceived on the Reddit platform, helping guide future strategies and communications in the sports and social spheres.
+
+
