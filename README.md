@@ -1,25 +1,25 @@
 # Euro2024 Sentiment Analysis
 
-## Analysis of Public Perception of Women's Participation in Football during Euro 2024
+## 🌍Analysis of Public Perception of Women's Participation in Football during Euro 2024
 
 ![EURO-2024](https://github.com/Munchkinland/Euro2024-Sentimel-Analysis/assets/92251234/ae209ede-8a66-4990-950b-7d105c31cd08)
 
-### Introduction
+### 📶Introduction
 
 The importance of equal opportunities for women in sports cannot be overstated. Historically, sports have been a male-dominated arena, with women often facing significant barriers to participation, recognition, and equal treatment. However, the landscape is gradually changing, and events like the Euro 2024 are prime examples of platforms where women athletes are increasingly showcasing their talent and dedication.
 
-### Why Analyzing Public Perception of Women's Participation in Football during Euro 2024 is Crucial
+### 🤔Why Analyzing Public Perception of Women's Participation in Football during Euro 2024 is Crucial
 
 - **Understanding Public Sentiment**: Gauging how the public perceives women's participation helps stakeholders understand the level of support or opposition. This can influence policies, sponsorship, and media coverage.
 - **Identifying Areas for Improvement**: Sentiment analysis can highlight specific areas where women's participation is either praised or criticized, allowing organizations to address these issues effectively.
 - **Promoting Equality**: By continuously monitoring and analyzing public opinion, we can promote equality in sports, ensuring that women receive the recognition and opportunities they deserve.
 - **Supporting Decision Making**: Organizations, advertisers, and policy-makers can use these insights to make informed decisions that support and promote women's sports.
 
-## Purpose of the Analysis
+## 🅿️Purpose of the Analysis
 
 The purpose of this analysis is to understand how the participation of women in football during Euro 2024 is perceived. Through sentiment analysis of posts and comments on Reddit, we aim to identify positive, negative, and neutral opinions on this topic. This information can be useful for sports organizations, journalists, and analysts who wish to understand public perception and make informed decisions.
 
-## Project Setup
+## 💾Project Setup
 
 ### APIs and Libraries Used
 
@@ -32,7 +32,7 @@ The purpose of this analysis is to understand how the participation of women in 
 
 We used the `cardiffnlp/twitter-roberta-base-sentiment` sentiment analysis model provided by Hugging Face. This model is optimized for analyzing sentiments in short texts, such as social media posts and comments.
 
-## Installation
+## 💻Installation
 
 ### Prerequisites
 
@@ -68,7 +68,7 @@ We used the `cardiffnlp/twitter-roberta-base-sentiment` sentiment analysis model
     user_agent = YOUR_USER_AGENT
     ```
 
-## Usage
+## 🚩Usage
 
 1. **Run the sentiment analysis script**:
     ```bash
@@ -111,7 +111,7 @@ We use Plotly to create various visualizations to represent the sentiment analys
 - **Pie Chart**: Illustrates the proportion of each sentiment type.
 - **Box Plot**: Shows the distribution of sentiment scores within each sentiment category.
 
-## Conclusions
+## 👩‍🏫Conclusions
 
 Through this analysis, we can draw several key conclusions about the public perception of women's participation in football during Euro 2024:
 
@@ -121,15 +121,15 @@ Through this analysis, we can draw several key conclusions about the public perc
 
 This analysis provides a clear view of how the participation of women in football during Euro 2024 is perceived on the Reddit platform, helping guide future strategies and communications in the sports and social spheres.
 
-## License
+## ✅License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Contributing
+## ✅Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
 
-## Acknowledgements
+## ✅Acknowledgements
 
 Thanks to [Hugging Face](https://huggingface.co/) for providing the sentiment analysis models and to [Plotly](https://plotly.com/) for the visualization tools.
 
