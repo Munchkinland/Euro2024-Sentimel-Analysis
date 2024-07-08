@@ -1,189 +1,134 @@
-# Euro2024-Sentimel-Analysis
-# Analysis of Public Perception of Women's Participation in Football during Euro 2024
+# Euro2024 Sentiment Analysis
 
-## Introduction
+## Analysis of Public Perception of Women's Participation in Football during Euro 2024
+
+### Introduction
 
 The importance of equal opportunities for women in sports cannot be overstated. Historically, sports have been a male-dominated arena, with women often facing significant barriers to participation, recognition, and equal treatment. However, the landscape is gradually changing, and events like the Euro 2024 are prime examples of platforms where women athletes are increasingly showcasing their talent and dedication.
 
-### 🚩 Analyzing public perception of women's participation in football during major events like Euro 2024 is crucial for several reasons:
+### Why Analyzing Public Perception of Women's Participation in Football during Euro 2024 is Crucial
+
 - **Understanding Public Sentiment**: Gauging how the public perceives women's participation helps stakeholders understand the level of support or opposition. This can influence policies, sponsorship, and media coverage.
 - **Identifying Areas for Improvement**: Sentiment analysis can highlight specific areas where women's participation is either praised or criticized, allowing organizations to address these issues effectively.
 - **Promoting Equality**: By continuously monitoring and analyzing public opinion, we can promote equality in sports, ensuring that women receive the recognition and opportunities they deserve.
 - **Supporting Decision Making**: Organizations, advertisers, and policy-makers can use these insights to make informed decisions that support and promote women's sports.
 
-## 🚩 Purpose of the Analysis
+## Purpose of the Analysis
 
 The purpose of this analysis is to understand how the participation of women in football during Euro 2024 is perceived. Through sentiment analysis of posts and comments on Reddit, we aim to identify positive, negative, and neutral opinions on this topic. This information can be useful for sports organizations, journalists, and analysts who wish to understand public perception and make informed decisions.
 
-## 1. APIs Used
+## Project Setup
+
+### APIs and Libraries Used
 
 - **PRAW (Python Reddit API Wrapper)**: To access posts and comments on Reddit.
 - **Transformers by Hugging Face**: To use pre-trained sentiment analysis models.
 - **NLTK (Natural Language Toolkit)**: For sentence tokenization.
 - **Plotly**: For data visualization.
 
-## 2. Model Used (Pipelines)
+### Model Used (Pipelines)
 
 We used the `cardiffnlp/twitter-roberta-base-sentiment` sentiment analysis model provided by Hugging Face. This model is optimized for analyzing sentiments in short texts, such as social media posts and comments.
 
-### 3. Import Libraries and Configure Models
+## Installation
 
-```python
-import pandas as pd
-import praw
-import nltk
-from nltk.tokenize import sent_tokenize
-from tqdm.notebook import tqdm
-from transformers import pipeline, AutoTokenizer
-import plotly.express as px
-import plotly.graph_objects as go
-import concurrent.futures
-import numpy as np
-from collections import Counter
+### Prerequisites
 
-nltk.download('punkt')
+- Python 3.8 or higher
+- pip (Python package installer)
 
-model_name = "cardiffnlp/twitter-roberta-base-sentiment"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-sentiment_pipeline = pipeline("sentiment-analysis", model=model_name, tokenizer=tokenizer)
+### Steps
 
-## 4. Functions for Text Processing and Sentiment Analysis
-python
-Copiar código
-def split_text_into_chunks(text, tokenizer, max_length=512):
-    sentences = sent_tokenize(text)
-    chunks, current_chunk, current_length = [], [], 0
-    for sentence in sentences:
-        sentence_tokens = tokenizer.encode(sentence, add_special_tokens=False)
-        sentence_length = len(sentence_tokens)
-        if current_length + sentence_length + 2 > max_length:
-            chunks.append(" ".join(current_chunk))
-            current_chunk, current_length = [sentence], sentence_length
-        else:
-            current_chunk.append(sentence)
-            current_length += sentence_length
-    if current_chunk:
-        chunks.append(" ".join(current_chunk))
-    return chunks
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/tu-usuario/nombre-del-repositorio.git
+    cd nombre-del-repositorio
+    ```
 
-def analyze_text_chunks(text):
-    chunks = split_text_into_chunks(text, tokenizer, max_length=tokenizer.model_max_length)
-    return [sentiment_pipeline(chunk)[0] for chunk in chunks if chunk.strip()]
+2. **Create and activate a virtual environment** (optional but recommended):
+    ```bash
+    python -m venv myenv
+    source myenv/bin/activate  # On Linux/Mac
+    myenv\Scripts\activate     # On Windows
+    ```
 
-def aggregate_sentiments(sentiments):
-    if not sentiments:
-        return {'label': 'neutral', 'score': 0.0}
-    avg_score = np.mean([sentiment['score'] for sentiment in sentiments])
-    labels = [sentiment['label'] for sentiment in sentiments]
-    label = Counter(labels).most_common(1)[0][0]
-    return {'label': label, 'score': avg_score}
+3. **Install the required packages**:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-label_mapping = {'LABEL_0': 'negative', 'LABEL_1': 'neutral', 'LABEL_2': 'positive'}
+4. **Configure your Reddit API credentials**:
+    Create a file named `config.ini` in the root directory of the project with the following content:
+    ```ini
+    [reddit]
+    client_id = YOUR_CLIENT_ID
+    client_secret = YOUR_CLIENT_SECRET
+    user_agent = YOUR_USER_AGENT
+    ```
 
-## 5. Function to Fetch Data from Reddit
-python
-Copiar código
-def fetch_reddit_posts_and_comments():
-    reddit = praw.Reddit(
-        client_id='ZC5eI8EbdWOlcTQU1C7cCg',
-        client_secret='a1MvR2C_syEBqKPWC75HRb-li28jSQ',
-        user_agent='python:praw:example_app:v1.0 (by /u/Suspicious_Sport2182)'
-    )
-    subreddit = reddit.subreddit('euro2024')
-    query = "women"
-    posts_and_comments = []
-    for submission in subreddit.search(query, limit=1000):
-        try:
-            posts_and_comments.append(submission.title + " " + submission.selftext)
-            submission.comments.replace_more(limit=0)
-            posts_and_comments.extend([comment.body for comment in submission.comments.list()])
-        except Exception as e:
-            print(f"Error fetching submission or comments: {e}")
-    return posts_and_comments
+## Usage
 
-## 6. Processing and Sentiment Analysis
-python
-Copiar código
-texts = fetch_reddit_posts_and_comments()
+1. **Run the sentiment analysis script**:
+    ```bash
+    python analisis_sentimientos.py
+    ```
 
-texts_sentiment = []
-error_count = 0
+2. **Visualize the results**:
+    The script will output various visualizations using Plotly, including bar charts, scatter plots, pie charts, and box plots.
 
-def process_text(text):
-    try:
-        sentiments = analyze_text_chunks(text)
-        aggregated_sentiment = aggregate_sentiments(sentiments)
-        return {
-            'text': text,
-            'sentiment_label': label_mapping.get(aggregated_sentiment['label'], 'neutral'),
-            'sentiment_score': aggregated_sentiment['score']
-        }
-    except Exception as e:
-        print(f"Error processing text: {e}")
-        return None
+## Explanation of the Code
 
-with concurrent.futures.ThreadPoolExecutor() as executor:
-    results = list(tqdm(executor.map(process_text, texts), total=len(texts), desc="Analyzing sentiments"))
+### Import Libraries and Configure Models
 
-texts_sentiment = [result for result in results if result is not None]
-error_count = len([result for result in results if result is None])
-df = pd.DataFrame(texts_sentiment)
+We import the necessary libraries, including PRAW for accessing Reddit, NLTK for text processing, Hugging Face's Transformers for sentiment analysis, and Plotly for data visualization. We also configure the sentiment analysis model.
 
-## 7. Calculate Loss Rate and Display Results
-python
-Copiar código
-total_texts = len(texts)
-processed_texts = total_texts - error_count
-loss_rate = (error_count / total_texts) * 100
+### Functions for Text Processing and Sentiment Analysis
 
-print(f"Total posts and comments analyzed: {total_texts}")
-print(f"Total texts processed without errors: {processed_texts}")
-print(f"Loss rate: {loss_rate:.2f}%")
+- `split_text_into_chunks(text, tokenizer, max_length=512)`: Splits text into chunks that fit within the model's maximum token length.
+- `analyze_text_chunks(text)`: Analyzes each chunk of text for sentiment.
+- `aggregate_sentiments(sentiments)`: Aggregates the sentiment scores of the chunks into a single score.
 
-## 8. Data Visualization
-Bar Chart
+### Fetch Data from Reddit
 
-Copiar código
-sentiment_counts = df['sentiment_label'].value_counts().reset_index()
-sentiment_counts.columns = ['sentiment', 'count']
-fig_bar = px.bar(sentiment_counts, x='sentiment', y='count',
-                 labels={'sentiment': 'Sentiment', 'count': 'Count'},
-                 title='Distribution of Sentiments in Posts 💻',
-                 color='sentiment',
-                 color_discrete_sequence=px.colors.qualitative.Set3)
-fig_bar.show()
-Scatter Plot
-python
-Copiar código
-fig_scatter = px.scatter(df, x='sentiment_score', y='text', color='sentiment_label',
-                         title='Sentiment Scores by Text',
-                         labels={'sentiment_score': 'Score', 'sentiment_label': 'Sentiment'},
-                         hover_data=['text'],
-                         color_discrete_sequence=px.colors.qualitative.Set1)
-fig_scatter.update_traces(marker=dict(size=5), selector=dict(mode='markers'))
-fig_scatter.show()
-Pie Chart
-python
-Copiar código
-fig_pie = px.pie(df, names='sentiment_label', title='Proportion of Sentiments',
-                 color_discrete_sequence=px.colors.qualitative.Pastel)
-fig_pie.show()
-Box Plot
-python
-Copiar código
-fig_box = px.box(df, x='sentiment_label', y='sentiment_score', color='sentiment_label',
-                 title='Distribution of Sentiment Scores',
-                 labels={'sentiment_label': 'Sentiment', 'sentiment_score': 'Score'},
-                 color_discrete_sequence=px.colors.qualitative.Vivid)
-fig_box.show()
+- `fetch_reddit_posts_and_comments()`: Fetches posts and comments from the `euro2024` subreddit that mention "women".
+
+### Processing and Sentiment Analysis
+
+We fetch the texts, process them to analyze sentiments, and aggregate the results.
+
+### Calculate Loss Rate and Display Results
+
+We calculate the total number of texts processed, the number of errors, and the loss rate. The results are printed to the console.
+
+### Data Visualization
+
+We use Plotly to create various visualizations to represent the sentiment analysis results.
+
+- **Bar Chart**: Shows the distribution of sentiments.
+- **Scatter Plot**: Displays sentiment scores for each text.
+- **Pie Chart**: Illustrates the proportion of each sentiment type.
+- **Box Plot**: Shows the distribution of sentiment scores within each sentiment category.
 
 ## Conclusions
 
 Through this analysis, we can draw several key conclusions about the public perception of women's participation in football during Euro 2024:
 
-Distribution of Sentiments: Most of the analyzed texts exhibit a neutral sentiment, followed by positive and then negative sentiments.
-Proportion of Sentiments: The pie chart clearly shows the proportion of each sentiment type, indicating that the perception is mostly neutral or positive.
-Sentiment Scores: The box plot shows the distribution of sentiment scores, indicating variability within each sentiment category.
+- **Distribution of Sentiments**: Most of the analyzed texts exhibit a neutral sentiment, followed by positive and then negative sentiments.
+- **Proportion of Sentiments**: The pie chart clearly shows the proportion of each sentiment type, indicating that the perception is mostly neutral or positive.
+- **Sentiment Scores**: The box plot shows the distribution of sentiment scores, indicating variability within each sentiment category.
+
 This analysis provides a clear view of how the participation of women in football during Euro 2024 is perceived on the Reddit platform, helping guide future strategies and communications in the sports and social spheres.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
+
+## Acknowledgements
+
+Thanks to [Hugging Face](https://huggingface.co/) for providing the sentiment analysis models and to [Plotly](https://plotly.com/) for the visualization tools.
 
 
