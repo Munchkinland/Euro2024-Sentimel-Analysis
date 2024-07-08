@@ -78,7 +78,7 @@ We used the `cardiffnlp/twitter-roberta-base-sentiment` sentiment analysis model
 2. **Visualize the results**:
     The script will output various visualizations using Plotly, including bar charts, scatter plots, pie charts, and box plots.
 
-## Explanation of the Code
+## ©️Explanation of the Code
 
 ### Import Libraries and Configure Models
 
