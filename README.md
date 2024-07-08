@@ -46,7 +46,8 @@ nltk.download('punkt')
 model_name = "cardiffnlp/twitter-roberta-base-sentiment"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 sentiment_pipeline = pipeline("sentiment-analysis", model=model_name, tokenizer=tokenizer)
-4. Functions for Text Processing and Sentiment Analysis
+
+## 4. Functions for Text Processing and Sentiment Analysis
 python
 Copiar código
 def split_text_into_chunks(text, tokenizer, max_length=512):
@@ -78,7 +79,8 @@ def aggregate_sentiments(sentiments):
     return {'label': label, 'score': avg_score}
 
 label_mapping = {'LABEL_0': 'negative', 'LABEL_1': 'neutral', 'LABEL_2': 'positive'}
-5. Function to Fetch Data from Reddit
+
+## 5. Function to Fetch Data from Reddit
 python
 Copiar código
 def fetch_reddit_posts_and_comments():
@@ -98,7 +100,8 @@ def fetch_reddit_posts_and_comments():
         except Exception as e:
             print(f"Error fetching submission or comments: {e}")
     return posts_and_comments
-6. Processing and Sentiment Analysis
+
+## 6. Processing and Sentiment Analysis
 python
 Copiar código
 texts = fetch_reddit_posts_and_comments()
@@ -125,7 +128,8 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 texts_sentiment = [result for result in results if result is not None]
 error_count = len([result for result in results if result is None])
 df = pd.DataFrame(texts_sentiment)
-7. Calculate Loss Rate and Display Results
+
+## 7. Calculate Loss Rate and Display Results
 python
 Copiar código
 total_texts = len(texts)
@@ -135,9 +139,10 @@ loss_rate = (error_count / total_texts) * 100
 print(f"Total posts and comments analyzed: {total_texts}")
 print(f"Total texts processed without errors: {processed_texts}")
 print(f"Loss rate: {loss_rate:.2f}%")
-8. Data Visualization
+
+## 8. Data Visualization
 Bar Chart
-python
+
 Copiar código
 sentiment_counts = df['sentiment_label'].value_counts().reset_index()
 sentiment_counts.columns = ['sentiment', 'count']
@@ -171,7 +176,9 @@ fig_box = px.box(df, x='sentiment_label', y='sentiment_score', color='sentiment_
                  labels={'sentiment_label': 'Sentiment', 'sentiment_score': 'Score'},
                  color_discrete_sequence=px.colors.qualitative.Vivid)
 fig_box.show()
-# 9. Conclusions
+
+## Conclusions
+
 Through this analysis, we can draw several key conclusions about the public perception of women's participation in football during Euro 2024:
 
 Distribution of Sentiments: Most of the analyzed texts exhibit a neutral sentiment, followed by positive and then negative sentiments.
