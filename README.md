@@ -72,7 +72,7 @@ We used the `cardiffnlp/twitter-roberta-base-sentiment` sentiment analysis model
 
 1. **Run the sentiment analysis script**:
     ```bash
-    python analisis_sentimientos.py
+    python app_roberta.py
     ```
 
 2. **Visualize the results**:
